@@ -9,86 +9,93 @@ if (passwordLength < 8 || passwordLength > 128) {
 } else {
   console.log(passwordLength);
 };
- 
+
 //prompt user for desired character types
 var useSpecialChar = true;
 var useNumericChar = true;
 var useUpperChar = true;
 var useLowerChar = true;
 var numOfCharTypes = 4;
+var usableCharTypes = "";
+var specials = "!@#$%^&*(){}[]=<>/,.";
+var numerics = "0123456789";
+var uppers = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+var lowers = "abcdefghijklmnopqrstuvwxyz";
 
-if (confirm("Include special characters?") === false){
+if (confirm("Include special characters?") === false) {
   useSpecialChar = false;
   numOfCharTypes--;
 };
-if(confirm("Include numeric characters?") === false){
+if (confirm("Include numeric characters?") === false) {
   useNumericChar = false;
   numOfCharTypes--;
 };
-if (confirm("Include uppercase characters?") === false){
+if (confirm("Include uppercase characters?") === false) {
   useUpperChar = false;
   numOfCharTypes--;
 };
-if (confirm("Include lowercase characters?") === false){
+if (confirm("Include lowercase characters?") === false) {
   useLowerChar = false;
   numOfCharTypes--;
 };
+//if user doesn't choose any character types
+if (numOfCharTypes === 0) {
+  //return '';
+}
 console.log(numOfCharTypes + " " + useSpecialChar + " " + useNumericChar + " " + useUpperChar + " " + useLowerChar);
 
-//write arrays for character types
-// var specialChar = [" !#$%&'()*+,-./:;<=>?@[\]^_`{|}~"];
-// var numericChar = ["0123456789"];
-// var upperChar = ["ABCDEFGHIJKLMNOPQRSTUVWXYZ"];
-// var lowerChar = ["abcdefghijklmnopqrstuvwxyz"];
-// //stringify and split arrays
-// specialCharArray = JSON.stringify(specialChar);
-// specialCharArray = specialCharArray.split("");
-// numericCharArray = JSON.stringify(numericChar);
-// numericCharArray = numericCharArray.split("");
-// upperCharArray = JSON.stringify(upperChar);
-// upperCharArray = upperCharArray.split("");
-// lowerCharArray = JSON.stringify(lowerChar);
-// lowerCharArray = lowerCharArray.split("");
-
-//get random char from each type
-// function getRandomSpecial(){
-//   var randomSpecialIndex = specialCharArray[Math.floor(Math.random() * specialCharArray.length)];
-//   var newSpecialChar = specialCharArray[randomSpecialIndex];
-//   console.log(newSpecialChar);
-//   console.log(typeof newSpecialChar);
-//   return newSpecialChar;
-// };
-// getRandomSpecial();
-
 function getRandomSpecial() {
-	const specials = "!@#$%^&*(){}[]=<>/,.";
-	return specials[Math.floor(Math.random() * specials.length)];
+  const specials = "!@#$%^&*(){}[]=<>/,.";
+  return specials[Math.floor(Math.random() * specials.length)];
 }
-getRandomSpecial();
-console.log(getRandomSpecial() + getRandomUpper() + getRandomNumeric() + getRandomLower());
+// console.log(getRandomSpecial() + getRandomUpper() + getRandomNumeric() + getRandomLower());
 
 function getRandomNumeric() {
-	const numerics = "0123456789";
-	return numerics[Math.floor(Math.random() * numerics.length)];
+  const numerics = "0123456789";
+  return numerics[Math.floor(Math.random() * numerics.length)];
 }
 
 function getRandomUpper() {
-	const uppers = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-	return uppers[Math.floor(Math.random() * uppers.length)];
+  const uppers = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+  return uppers[Math.floor(Math.random() * uppers.length)];
 }
 
 function getRandomLower() {
-	const lowers = "abcdefghijklmnopqrstuvwxyz";
-	return lowers[Math.floor(Math.random() * lowers.length)];
+  const lowers = "abcdefghijklmnopqrstuvwxyz";
+  return lowers[Math.floor(Math.random() * lowers.length)];
 }
 
 //generate password
-function generatePassword(){
-  for(i=0; i <= numOfCharTypes; i++){
-    
-  }
-}
+function generatePassword() {
+  pwd = "";
+  numberOfChar = passwordLength / numOfCharTypes;
+  modOfChar = passwordLength % numOfCharTypes;
 
+  for (i = 0; i < passwordLength; i++) {
+    if (useSpecialChar === true) {
+      pwd = pwd + getRandomSpecial();
+    }
+    //next round
+    for (j = 0; j < passwordLength; j++) {
+      if (useNumericChar === true) {
+        pwd = pwd + getRandomNumeric();
+      }
+    }
+    //next round
+    for (k = 0; k < passwordLength; k++)
+    if (useUpperChar === true) {
+      pwd = pwd + getRandomUpper();
+    }
+    //next round
+    for (l = 0; l < passwordLength; l++)
+    if (useLowerChar === true) {
+      pwd = pwd + getRandomLower();
+    }
+  }
+  console.log(pwd);
+  return pwd;
+}
+generatePassword();
 // Write password to the #password input
 function writePassword() {
   var password = generatePassword();
